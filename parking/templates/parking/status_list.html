@@ -1,0 +1,10 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'status' %}">← Back</a>
+<h2>{{ kind|capfirst }} Slots ({{ total }})</h2>
+<form method="get"><input name="q" placeholder="Search slot, entrance or code" value="{{ q }}"></form>
+<div class="panel sc"><table><thead><tr><th>Slot number</th><th>Entrance used</th><th>Level</th><th>Verification code</th>{% if kind == 'occupied' %}<th>Booked</th><th></th>{% endif %}</tr></thead><tbody>
+{% for s in slots %}<tr><td>{{ s.label }}</td><td>{{ s.entrance.display_name }}</td><td>{{ s.level.name }}</td><td class="code">{{ s.code|default:"—" }}</td>
+{% if kind == 'occupied' %}<td>{{ s.booked_at|date:"d M Y, H:i" }}</td><td><form class="inline" method="post" action="{% url 'release' s.pk %}">{% csrf_token %}<button class="btn sm">Release</button></form></td>{% endif %}</tr>
+{% empty %}<tr><td colspan="6" class="mut">No slots.</td></tr>{% endfor %}</tbody></table></div>
+{% if total > 400 %}<p class="mut">Showing 400 of {{ total }}. Use search.</p>{% endif %}
+{% if kind == 'available' %}<p class="mut">A verification code is generated when a driver books, so available slots show “—”. Each booking gets a fresh random code.</p>{% endif %}{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'dashboard' %}">← Back</a><h2>Slot Management</h2>
+
+<div class="panel"><h3>Quick setup (rebuild the whole layout)</h3>
+<p class="mut">For a different site, e.g. one entrance, one level, 30 slots. Requires no occupied slots.</p>
+<form method="post" action="{% url 'manage_action' 'quick' %}" class="inl">{% csrf_token %}
+<div><label>Entrance names (comma separated)</label><input name="names" value="{{ quick_names }}"></div>
+<div><label>Levels</label><input name="levels" type="number" min="1" value="{{ quick_levels }}"></div>
+<div><label>Slots per level, per entrance</label><input name="per" type="number" min="1" value="{{ quick_per }}"></div>
+<button class="btn pri">Apply</button></form></div>
+
+<div class="panel sc"><h3>Entrances</h3><table><tr><th>Name</th><th>Prefix</th><th>Slots</th><th>Status</th><th></th></tr>
+{% for e in entrances %}<tr><td>{{ e.display_name }}</td><td>{{ e.prefix }}</td><td>{{ e.total }}</td>
+<td>{% if e.status == 'open' %}<span class="pill">Open</span>{% else %}<span class="pill w">Maintenance</span>{% endif %}</td>
+<td><form class="inline" method="post" action="{% url 'manage_action' 'entrance_toggle' %}">{% csrf_token %}<input type="hidden" name="id" value="{{ e.pk }}"><button class="btn sm">{% if e.status == 'open' %}Set maintenance{% else %}Reopen{% endif %}</button></form>
+<form class="inline" method="post" action="{% url 'manage_action' 'entrance_delete' %}">{% csrf_token %}<input type="hidden" name="id" value="{{ e.pk }}"><button class="btn sm dng">Remove</button></form></td></tr>{% endfor %}</table>
+<form method="post" action="{% url 'manage_action' 'entrance_add' %}" class="inl" style="margin-top:12px">{% csrf_token %}
+<div><label>New entrance name</label><input name="name" required></div><div><label>Slots per level</label><input name="per" type="number" min="1" value="30"></div><button class="btn">+ Add entrance</button></form></div>
+
+<div class="panel sc"><h3>Parking levels</h3><table><tr><th>Level</th><th>Slots</th><th>Status</th><th></th></tr>
+{% for l in levels %}<tr><td>{{ l.name }}</td><td>{{ l.total }}</td>
+<td>{% if l.status == 'open' %}<span class="pill">Open</span>{% else %}<span class="pill w">Maintenance</span>{% endif %}</td>
+<td><form class="inline" method="post" action="{% url 'manage_action' 'level_toggle' %}">{% csrf_token %}<input type="hidden" name="id" value="{{ l.pk }}"><button class="btn sm">{% if l.status == 'open' %}Set maintenance{% else %}Reopen{% endif %}</button></form>
+<form class="inline" method="post" action="{% url 'manage_action' 'level_delete' %}">{% csrf_token %}<input type="hidden" name="id" value="{{ l.pk }}"><button class="btn sm dng">Remove</button></form></td></tr>{% endfor %}</table>
+<form method="post" action="{% url 'manage_action' 'level_add' %}" class="inl" style="margin-top:12px">{% csrf_token %}
+<div><label>Slots per entrance on new level</label><input name="per" type="number" min="1" value="30"></div><button class="btn">+ Add level</button></form></div>
+
+<div class="panel sc"><h3>Slots per entrance and level</h3><table><tr><th></th>{% for e in entrances %}<th>{{ e.name }}</th>{% endfor %}</tr>
+{% for row in matrix %}<tr><td>{{ row.level.name }}</td>{% for c in row.cells %}<td>
+<form class="inline" method="post" action="{% url 'manage_action' 'set_count' %}">{% csrf_token %}<input type="hidden" name="entrance" value="{{ c.entrance.pk }}"><input type="hidden" name="level" value="{{ row.level.pk }}">
+<input class="num" name="count" type="number" min="0" value="{{ c.count }}"> <button class="btn sm">Set</button></form></td>{% endfor %}</tr>{% endfor %}</table></div>
+
+<div class="panel"><h3>Individual slot maintenance</h3>
+<form method="get" class="inl"><div><select name="e" onchange="this.form.submit()">{% for e in entrances %}<option value="{{ e.pk }}" {% if e.pk == sel_e %}selected{% endif %}>{{ e.display_name }}</option>{% endfor %}</select></div>
+<div><select name="l" onchange="this.form.submit()">{% for l in levels %}<option value="{{ l.pk }}" {% if l.pk == sel_l %}selected{% endif %}>{{ l.name }}</option>{% endfor %}</select></div><noscript><button class="btn sm">Show</button></noscript></form>
+<p class="mut">Click a slot to toggle maintenance (occupied slots can't be changed).</p>
+<div class="grid">{% for s in slots %}
+{% if s.status == 'occupied' %}<span class="sl oc">{{ s.number }}</span>{% else %}
+<form method="post" action="{% url 'manage_action' 'slot_toggle' %}">{% csrf_token %}<input type="hidden" name="id" value="{{ s.pk }}"><input type="hidden" name="e" value="{{ sel_e }}"><input type="hidden" name="l" value="{{ sel_l }}"><button class="sl {% if s.status == 'maintenance' %}mt{% endif %}">{{ s.number }}</button></form>{% endif %}
+{% endfor %}</div></div>{% endblock %}

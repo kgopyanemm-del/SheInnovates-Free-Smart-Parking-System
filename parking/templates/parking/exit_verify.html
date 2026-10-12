@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="form"><h2 style="text-align:center">{{ entrance.exit_name }}</h2>
+<form method="post" class="panel">{% csrf_token %}
+<label>Slot number</label><input name="label" placeholder="e.g. S-L1-012" value="{{ label|default:'' }}" required>
+<label>Verification code</label><input name="code" placeholder="e.g. A1B2C3" value="{{ code|default:'' }}" required>
+{% if error %}<div class="res er">✖ {{ error }}</div>{% endif %}
+<div style="margin-top:14px"><button class="btn pri" style="width:100%">✔ Verify &amp; exit</button></div></form>
+<a class="btn" href="{% url 'exit_gate' %}">← Change gate</a></div>{% endblock %}

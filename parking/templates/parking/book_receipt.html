@@ -1,0 +1,7 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="hero"><div class="big">✅</div><h2>Your slot is reserved. Enjoy your visit!</h2>
+<div class="panel form" style="text-align:left"><div class="mut">YOUR SLOT</div><div class="rc">{{ b.slot_label }}</div>
+<div class="mut">VERIFICATION CODE</div><div class="rc">{{ b.code }}</div>
+<div class="mut" style="margin-top:10px">Booked: {{ b.entered_at|date:"d M Y, H:i" }}</div><div class="mut">Exit through: <b>{{ b.exit_name }}</b></div></div>
+<div class="warn form">⚠ Screenshot or note your slot number and code. You need both, and the matching exit, to leave.</div>
+<a class="btn" href="{% url 'home' %}">Done</a></div>{% endblock %}

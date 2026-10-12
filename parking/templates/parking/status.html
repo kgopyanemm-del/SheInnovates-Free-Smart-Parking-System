@@ -1,0 +1,4 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'dashboard' %}">← Back</a><h2>Slot Status</h2>
+<div class="cards"><a class="cardx" href="{% url 'status_list' 'available' %}"><div class="t g">Available</div><div class="tile" style="border:0"><div class="n g">{{ available }}</div></div></a>
+<a class="cardx" href="{% url 'status_list' 'occupied' %}"><div class="t r">Occupied</div><div class="tile" style="border:0"><div class="n r">{{ occupied }}</div></div></a></div>{% endblock %}

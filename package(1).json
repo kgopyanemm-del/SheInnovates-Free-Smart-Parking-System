@@ -1,0 +1,19 @@
+{
+  "name": "smartpark",
+  "version": "1.0.0",
+  "description": "Parking slot management: Node + Express + SQLite",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "test": "node --disable-warning=ExperimentalWarning tests/run-tests.js"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'home' %}">← Back</a>
+<h2>Admin Dashboard</h2><p class="mut">Welcome, {{ user.full_name }}.</p>
+<div class="cards">
+ <a class="cardx" href="{% url 'status' %}"><div class="t">📊 Slot Status</div><div class="mut">{{ available }} available · {{ occupied }} occupied</div></a>
+ <a class="cardx" href="{% url 'manage' %}"><div class="t">⚙ Slot Management</div><div class="mut">Levels, entrances, slots, maintenance</div></a>
+ <a class="cardx" href="{% url 'admins' %}"><div class="t">👥 Admin Accounts</div><div class="mut">{{ admins }} admin(s)</div></a>
+</div>{% endblock %}

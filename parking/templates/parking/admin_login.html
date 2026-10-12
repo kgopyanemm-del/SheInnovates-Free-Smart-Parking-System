@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'home' %}">← Back</a>
+<div class="form"><h2 style="text-align:center">Admin Login</h2>
+<form method="post" class="panel">{% csrf_token %}
+<label>Employee number</label><input name="employee_number" autocomplete="username" required autofocus>
+<label>Password</label><input name="password" type="password" autocomplete="current-password" required>
+{% if error %}<div class="res er">✖ {{ error }}</div>{% endif %}
+<div style="margin-top:14px"><button class="btn pri" style="width:100%">Sign in</button></div></form></div>{% endblock %}

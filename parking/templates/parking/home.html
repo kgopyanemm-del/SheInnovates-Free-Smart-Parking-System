@@ -1,0 +1,9 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="hero"><div class="big">🏢</div><h1><b>HELLO,</b> WELCOME</h1>
+<p class="mut">Real-time slot management. No queues. No confusion.</p>
+<div class="row"><a class="btn pri" href="{% url 'book_entrance' %}">🚗 Entrance</a><a class="btn" href="{% url 'exit_gate' %}">🚪 Exit</a></div></div>
+<div class="tiles">
+  <div class="tile"><div class="n g">{{ available }}</div><div class="mut">Slots Available Now</div></div>
+  <div class="tile"><div class="n b">{{ total }}</div><div class="mut">Total Parking Slots</div></div>
+  {% for row in stats %}<div class="tile"><div class="n g">{{ row.free }}</div><div class="mut">{{ row.entrance.display_name }}</div></div>{% endfor %}
+</div>{% endblock %}

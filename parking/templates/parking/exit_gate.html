@@ -1,0 +1,4 @@
+{% extends "parking/base.html" %}{% block content %}
+<h2>Choose Your Exit Gate</h2><p class="mut">Each entrance has its own exit. Pick the gate you are at.</p>
+<div class="cards">{% for e in entrances %}<a class="cardx" href="{% url 'exit_verify' e.pk %}"><div class="t">{{ e.exit_name }}</div></a>{% empty %}<p class="mut">No gates configured.</p>{% endfor %}</div>
+<a class="btn" href="{% url 'home' %}">← Back</a>{% endblock %}

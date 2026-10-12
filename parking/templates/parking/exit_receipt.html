@@ -1,0 +1,6 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="hero"><div class="big">🟢</div><h2>Verified. {{ b.exit_name }} is open.</h2>
+<div class="panel form" style="text-align:left"><div class="mut">EXIT RECEIPT</div><div class="rc">{{ b.slot_label }}</div>
+<table><tr><td class="mut">Exit gate</td><td>{{ b.exit_name }}</td></tr><tr><td class="mut">Entered</td><td>{{ b.entered_at|date:"d M Y, H:i" }}</td></tr>
+<tr><td class="mut">Exited</td><td>{{ b.exited_at|date:"d M Y, H:i" }}</td></tr><tr><td class="mut">Time parked</td><td>{{ parked }}</td></tr></table></div>
+<p class="mut">Slot is now free. Safe travels!</p><a class="btn" href="{% url 'home' %}">Done</a></div>{% endblock %}

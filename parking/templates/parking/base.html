@@ -1,0 +1,21 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}SmartPark{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'parking/style.css' %}"></head>
+<body>
+<header>
+  <a class="logo" href="{% url 'home' %}">Smart<b>Park</b></a>
+  {% if user.is_authenticated %}
+  {# ADMIN AVATAR (top right): initials, name, employee number, dashboard link and log out #}
+  <details class="menu"><summary class="av">{{ user.initials }}</summary>
+    <div class="dd"><b>{{ user.full_name }}</b><div class="mut">Emp no. {{ user.employee_number }}</div>
+      <a class="btn sm" href="{% url 'dashboard' %}">Dashboard</a>
+      <form method="post" action="{% url 'admin_logout' %}">{% csrf_token %}<button class="btn sm dng">Log out</button></form></div></details>
+  {% else %}<a class="btn sm" href="{% url 'admin_login' %}">Admin</a>{% endif %}
+</header>
+<main>
+  {% if maintenance_items %}<div class="warn">🛠 Maintenance in progress: {{ maintenance_items|join:", " }}. These are not issuing tickets.</div>{% endif %}
+  {% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main></body></html>

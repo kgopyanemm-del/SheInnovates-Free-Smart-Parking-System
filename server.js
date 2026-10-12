@@ -1,0 +1,28 @@
+const express = require('express'), path = require('path'), crypto = require('crypto');
+const { open, Fail } = require('./db'), selftest = require('./tests/selftest');
+const db = open(process.env.DB_FILE || path.join(__dirname, 'smartpark.db'));
+const app = express(); app.use(express.json()); app.use(express.static(path.join(__dirname, 'public')));
+const sessions = new Map(), tok = req => (req.headers.authorization || '').replace('Bearer ', '');
+const auth = (req, res, next) => { const a = sessions.get(tok(req)); if (!a) return res.status(401).json({ error: 'Please log in as admin.' }); req.admin = a; next(); };
+const h = f => (req, res) => { try { res.json(f(req) ?? { ok: true }); } catch (e) { if (e instanceof Fail) return res.status(400).json({ error: e.message }); console.error(e); res.status(500).json({ error: 'Server error' }); } };
+const post = (p, f) => app.post('/api' + p, h(f)), admin = (p, f) => app.post('/api/admin' + p, auth, h(f));
+
+app.get('/api/state', h(req => { const a = sessions.get(tok(req)) || null; return { state: db.state(!!a), admin: a }; }));
+post('/book', r => db.book(+r.body.slotId));
+post('/exit', r => db.exit(+r.body.eid, r.body.label, r.body.code));
+post('/login', r => { const a = db.login(r.body.emp, r.body.password); if (!a) throw new Fail('Invalid employee number or password.'); const t = crypto.randomBytes(24).toString('hex'); sessions.set(t, a); return { token: t, admin: a }; });
+post('/logout', r => { sessions.delete(tok(r)); });
+admin('/release', r => db.release(+r.body.id));
+admin('/setcount', r => db.setCount(+r.body.eid, +r.body.lid, r.body.n));
+admin('/entrance/add', r => db.addEntrance(r.body.name, r.body.per));
+admin('/entrance/toggle', r => db.toggle('entrances', +r.body.id));
+admin('/entrance/delete', r => db.remove('entrances', +r.body.id));
+admin('/level/add', r => db.addLevel(r.body.per));
+admin('/level/toggle', r => db.toggle('levels', +r.body.id));
+admin('/level/delete', r => db.remove('levels', +r.body.id));
+admin('/slot/toggle', r => db.toggle('slots', +r.body.id));
+admin('/quick', r => db.build(String(r.body.names).split(','), r.body.levels, r.body.per));
+admin('/admins/add', r => db.addAdmin(r.body.emp, r.body.name, r.body.password));
+admin('/admins/delete', r => { if (r.body.emp === r.admin.emp) throw new Fail('You cannot remove yourself.'); db.removeAdmin(r.body.emp); });
+admin('/selftest', () => { const s = db.state(true), per = s.slots.filter(x => x.eid === s.entrances[0]?.id && x.lid === s.levels[0]?.id).length || 1; return { results: s.entrances.length ? selftest.run(s.entrances.map(e => e.name), s.levels.length || 1, per) : [['No entrances configured', false, '']] }; });
+const port = process.env.PORT || 3000; app.listen(port, () => console.log(`SmartPark running: http://localhost:${port}`));

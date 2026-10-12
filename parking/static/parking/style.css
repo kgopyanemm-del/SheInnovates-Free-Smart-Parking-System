@@ -1,0 +1,27 @@
+:root{--bg:#080c16;--card:#111827;--line:#1e293b;--tx:#e5e9f0;--mut:#8b97ab;--blue:#0a6cff;--grn:#22c55e;--red:#ef4444;--amb:#f59e0b}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--tx);font:15px Inter,system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:#0f1626;border-bottom:1px solid var(--line);position:relative}
+.logo{font:700 26px Rajdhani,sans-serif;letter-spacing:1px;text-decoration:underline}.logo b{color:var(--blue)}
+main{max-width:1100px;margin:0 auto;padding:26px 18px 60px}h1,h2,h3{font-family:Rajdhani,sans-serif;margin:.2em 0}h1{font-size:40px;letter-spacing:2px}h1 b{color:var(--blue)}
+.mut{color:var(--mut)}.hero{text-align:center;padding:30px 0}.big{font-size:64px}.row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.btn{display:inline-block;background:transparent;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:12px 22px;font:700 15px Rajdhani,sans-serif;letter-spacing:1.5px;cursor:pointer;text-transform:uppercase}
+.btn:hover{border-color:var(--blue)}.pri{background:var(--blue);border-color:var(--blue)}.grn{background:var(--grn);border-color:var(--grn);color:#04210f}.sm{padding:5px 10px;font-size:13px}.dng{color:var(--red);border-color:#5b1b1b}
+.tiles,.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:18px 0}
+.tile,.cardx{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;text-align:center}.tile .n{font:700 38px Rajdhani}.g{color:var(--grn)}.b{color:var(--blue)}.r{color:var(--red)}
+a.cardx:hover{border-color:var(--blue)}.cardx.off{opacity:.55;cursor:not-allowed}.cardx .t{font:700 22px Rajdhani;letter-spacing:1.5px;text-transform:uppercase}
+.pill{display:inline-block;border:1px solid #14532d;background:#0b2415;color:#4ade80;border-radius:20px;padding:3px 12px;font-size:13px;margin-top:8px}.pill.w{border-color:#78501a;background:#2a1d08;color:var(--amb)}.pill.r{border-color:#5b1b1b;background:#2a0f0f;color:#f87171}
+.warn{background:#2a1d08;border:1px solid #78501a;color:var(--amb);padding:12px 16px;border-radius:10px;margin-bottom:14px}
+.msg{padding:12px 16px;border-radius:10px;margin-bottom:14px}.msg.success{background:#0b2415;border:1px solid #14532d;color:#4ade80}.msg.error{background:#2a0f0f;border:1px solid #7f1d1d;color:#f87171}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:16px 0}.crumb{color:var(--blue);margin-bottom:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:8px;margin:16px 0}
+.sl{display:block;border:1px solid #14532d;background:#0b2415;color:#4ade80;border-radius:8px;padding:10px 0;text-align:center;font:700 16px Rajdhani;cursor:pointer}.sl small{display:block;font-size:11px}
+.sl:hover{border-color:var(--blue)}.sl.oc{border-color:#7f1d1d;background:#2a0f0f;color:#f87171;cursor:not-allowed}.sl.mt{border-color:#78501a;background:#2a1d08;color:var(--amb)}
+button.sl{width:100%;font-family:Rajdhani}
+input,select{background:#1a2338;border:1px solid var(--line);color:var(--tx);border-radius:8px;padding:12px;font:inherit;width:100%}label{display:block;margin:12px 0 5px;color:var(--mut);font-size:13px;text-transform:uppercase}
+.form{max-width:440px;margin:0 auto}.inl{display:flex;gap:10px;flex-wrap:wrap;align-items:end}.inl>div{flex:1;min-width:130px}input.num{width:80px;padding:6px}form.inline{display:inline}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--mut);font-size:12px;text-transform:uppercase}.code{font:700 17px Rajdhani;letter-spacing:3px;color:#7fb2ff}.sc{overflow-x:auto}
+details.menu summary{list-style:none}.av{width:38px;height:38px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font:700 16px Rajdhani;cursor:pointer}
+.dd{position:absolute;right:18px;top:62px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;z-index:5;min-width:210px;display:flex;flex-direction:column;gap:8px}
+.rc{font:700 34px Rajdhani;color:var(--blue);letter-spacing:3px}.res{padding:16px;border-radius:10px;margin:14px 0}.res.er{background:#2a0f0f;border:1px solid #7f1d1d;color:#f87171}
+.backrow{margin-bottom:14px}

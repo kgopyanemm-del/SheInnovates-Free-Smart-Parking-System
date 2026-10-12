@@ -1,0 +1,10 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="crumb">Entrances › {{ entrance.name }} › {{ level.name }}</div>
+<h2>{{ entrance.display_name }} — {{ level.name }}</h2>
+<p class="mut">{{ free }} of {{ slots|length }} slots available. Tap a green slot to select it.</p>
+<div class="grid">{% for s in slots %}
+  {% if s.status == 'available' and can_book %}<a class="sl" href="{% url 'book_confirm' s.pk %}">{{ s.number }}<small>{{ entrance.prefix }}{{ level.number }}</small></a>
+  {% elif s.status == 'occupied' %}<span class="sl oc">{{ s.number }}<small>{{ entrance.prefix }}{{ level.number }}</small></span>
+  {% else %}<span class="sl mt">{{ s.number }}<small>{{ entrance.prefix }}{{ level.number }}</small></span>{% endif %}
+{% endfor %}</div>
+<a class="btn" href="{% url 'book_level' entrance.pk %}">← Back</a>{% endblock %}

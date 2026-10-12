@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<a class="btn sm backrow" href="{% url 'dashboard' %}">← Back</a><h2>Admin Accounts</h2>
+<div class="panel sc"><table><tr><th>Employee no.</th><th>Name</th><th></th></tr>
+{% for a in admins %}<tr><td>{{ a.employee_number }}</td><td>{{ a.full_name }}</td><td>
+{% if a == user %}<span class="mut">you</span>{% else %}<form class="inline" method="post" action="{% url 'admin_remove' a.pk %}">{% csrf_token %}<button class="btn sm dng">Remove</button></form>{% endif %}</td></tr>{% endfor %}</table></div>
+<div class="panel"><h3>Add admin</h3><form method="post" action="{% url 'admin_add' %}" class="inl">{% csrf_token %}
+<div><label>Employee number</label><input name="employee_number" required></div><div><label>Full name</label><input name="full_name" required></div>
+<div><label>Password (6+ chars)</label><input name="password" type="password" required></div><button class="btn pri">+ Add</button></form></div>{% endblock %}

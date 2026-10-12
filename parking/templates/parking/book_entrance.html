@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<h2>Choose Your Entrance</h2><p class="mut">Select the entrance closest to where you are.</p>
+<div class="cards">{% for r in rows %}
+  {% if r.off %}<div class="cardx off"><div class="t">{{ r.entrance.display_name }}</div>
+    {% if r.entrance.status != 'open' %}<span class="pill w">Under maintenance</span>{% else %}<span class="pill r">Full</span>{% endif %}</div>
+  {% else %}<a class="cardx" href="{% url 'book_level' r.entrance.pk %}"><div class="t">{{ r.entrance.display_name }}</div><span class="pill">{{ r.free }} slots available</span></a>{% endif %}
+{% empty %}<p class="mut">No entrances configured. Ask an admin.</p>{% endfor %}</div>
+<a class="btn" href="{% url 'home' %}">← Back</a>{% endblock %}

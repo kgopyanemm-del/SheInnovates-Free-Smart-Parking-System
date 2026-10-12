@@ -1,0 +1,8 @@
+{% extends "parking/base.html" %}{% block content %}
+<div class="crumb">Entrances › {{ entrance.name }}</div><h2>Choose Parking Level</h2>
+<div class="cards">{% for r in rows %}
+  {% if r.off %}<div class="cardx off"><div class="t">{{ r.level.name }}</div>
+    {% if r.level.status != 'open' %}<span class="pill w">Under maintenance</span>{% else %}<span class="pill r">Full</span>{% endif %}</div>
+  {% else %}<a class="cardx" href="{% url 'book_slots' entrance.pk r.level.pk %}"><div class="t">{{ r.level.name }}</div><span class="pill">{{ r.free }} available</span></a>{% endif %}
+{% endfor %}</div>
+<a class="btn" href="{% url 'book_entrance' %}">← Back</a>{% endblock %}
