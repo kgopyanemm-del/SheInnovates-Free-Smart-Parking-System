@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SmartPark: Parking Slot Management
 
 ## Run it
@@ -24,3 +25,6 @@ Entrances, levels and slots are rows in the data object (`DB`), created/edited f
 5. Admins can release a slot without a code (override).
 6. localStorage stands in for the database. Replace `save()` and the load in the boot section with real DB calls.
 7. Passwords are stored as SHA-256 hashes (a real deployment should use salted server-side hashing).
+=======
+# SheInnovates-Free-Smart-Parking-System
+>>>>>>> fac13c42145cf4b80012ecd7e80059dde240ae7a
