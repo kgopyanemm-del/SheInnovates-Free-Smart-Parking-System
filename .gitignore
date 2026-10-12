@@ -1,2 +1,4 @@
 node_modules
 smartpark.db*
+db.sqlite3
+*.sqlite3
